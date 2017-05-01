@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿﻿<?xml version="1.0" encoding="utf-8"?>
 <vxml version="2.1">
 
 
@@ -308,7 +308,7 @@
       ]]>
         </script>
 
-        <prompt>You selected a choice for category <value expr="mainCategory"/>
+        <prompt>You have selected a choice for category <value expr="mainCategory"/>
          and subCategory <value expr="subCategory"/>.</prompt>
         <goto next="#record_name_message"/>
       </filled>
