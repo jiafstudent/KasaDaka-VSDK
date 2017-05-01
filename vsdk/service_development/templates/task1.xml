@@ -1,0 +1,393 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<vxml version="2.1">
+
+
+  <script>
+    <![CDATA[
+    var mainCategory = "";
+    var subCategory = "";
+    ]]>
+  </script>
+
+  <form id="main">
+    <field name="mainselection">
+      <prompt>
+        Hello and welcome to the phone number for Forona Blon radio.
+        Please select a category of the message.
+        Press 1 to select alert messages.
+        Press 2 to select entertainment.
+        Press 3 to place an announcement.
+        Press 4 to place a promotional message.
+      </prompt>
+      <grammar mode="dtmf" version="1.0" root="top">
+        <rule id="top">
+          <one-of>
+            <item>1</item>
+            <item>2</item>
+            <item>3</item>
+            <item>4</item>
+          </one-of>
+        </rule>
+      </grammar>
+
+      <noinput>
+        <prompt> I did not hear anything. Try again.</prompt>
+        <reprompt/>
+      </noinput>
+
+      <nomatch>
+        <prompt> I did not recognise that choice. Try again.</prompt>
+        <reprompt/>
+      </nomatch>
+
+      <filled>
+        <script>
+          <![CDATA[
+      var next_destination = "";
+      switch(mainselection)
+      {
+      case "1":
+      next_destination = "#leave_message_alerts";
+      mainCategory = "alert";
+      break;
+      case "2":
+      next_destination = "#leave_message_entertain";
+      mainCategory = "entertainment";
+      case "3":
+      next_destination = "#leave_message_announcement";
+      mainCategory = "announcement";
+      break;
+      case "4":
+      next_destination = "#leave_message_promotion";
+      mainCategory = "promotion";
+      break;
+      default:
+      next_destination = "#leave_message_alerts";
+      mainCategory = "alert";
+      break;
+      }
+      ]]>
+        </script>
+
+        <prompt>You selected a choice.</prompt>
+        <goto expr="next_destination"/>
+
+      </filled>
+    </field>
+  </form>
+
+  <form id="leave_message_alerts">
+    <field name="alertselection">
+      <prompt>
+        You have selected to leave an alert.
+        Please select a specific category of this alert.
+        Press 1 to leave an alert on health issues.
+        Press 2 to leave an alert on the weather or nature.
+        Press 3 to leave an alert on criminal events.
+        Press 4 to leave an alert on Military or Terrorist events.
+      </prompt>
+      <grammar mode="dtmf" version="1.0" root="top">
+        <rule id="top">
+          <one-of>
+            <item>1</item>
+            <item>2</item>
+            <item>3</item>
+            <item>4</item>
+          </one-of>
+        </rule>
+      </grammar>
+
+      <noinput>
+        <prompt> I did not hear anything. Try Again.</prompt>
+        <reprompt/>
+      </noinput>
+
+      <nomatch>
+        <prompt> I did not recognise that choice. Try again.</prompt>
+        <reprompt/>
+      </nomatch>
+
+      <filled>
+        <script>
+          <![CDATA[
+      switch(alertselection)
+      {
+      case "1":
+      subCategory = "health";
+      break;
+      case "2":
+      subCategory = "nature";
+      break;
+      case "3":
+      subCategory = "crime";
+      break;
+      case "4":
+      subCategory = "military";
+      break;
+      default:
+      subCategory = "health";
+      break;
+      }
+      ]]>
+        </script>
+
+        <prompt>You selected a choice for category <value expr="mainCategory"/>
+         and subCategory <value expr="subCategory"/>.</prompt>
+        <goto next="#record_name_message"/>
+
+      </filled>
+    </field>
+  </form>
+
+  <form id="leave_message_entertain">
+    <field name = "entertainselection">
+      <prompt>
+        You have selected entertainment.
+        Press 1 to leave a message on stories
+        Press 2 to leave a joke.
+      </prompt>
+
+      <grammar mode="dtmf" version="1.0" root="top">
+        <rule id="top">
+          <one-of>
+            <item>1</item>
+            <item>2</item>
+          </one-of>
+        </rule>
+      </grammar>
+
+      <noinput>
+        <prompt> I did not hear anything. Try again.</prompt>
+        <reprompt/>
+      </noinput>
+
+      <nomatch>
+        <prompt> I did not recognise that choice. Try again.</prompt>
+        <reprompt/>
+      </nomatch>
+
+      <filled>
+        <script>
+          <![CDATA[
+      switch(entertainselection)
+      {
+      case "1":
+      subCategory = "stories";
+      break;
+      case "2":
+      subCategory = "joke";
+      break;
+      default:
+      subCategory = "stories";
+      break;
+      }
+      ]]>
+        </script>
+
+        <prompt>You selected a choice for category <value expr="mainCategory"/>
+         and subCategory <value expr="subCategory"/>.</prompt>
+        <goto next="#record_name_message"/>
+      </filled>
+    </field>
+  </form>
+
+  <form id="leave_message_announcement">
+    <field name = "announcementselection">
+      <prompt>
+        You have selected. announcement.
+        Press 1 to leave an announcement on parties.
+        Press 2 to leave an announcement on funerals.
+        Press 3 to leave an announcement on weddings.
+        Press 4 to leave an announcement on other things.
+      </prompt>
+
+      <grammar mode="dtmf" version="1.0" root="top">
+        <rule id="top">
+          <one-of>
+            <item>1</item>
+            <item>2</item>
+            <item>3</item>
+            <item>4</item>
+          </one-of>
+        </rule>
+      </grammar>
+
+      <noinput>
+        <prompt> I did not hear anything. Try Again. </prompt>
+        <reprompt/>
+      </noinput>
+
+      <nomatch>
+        <prompt> I did not recognise that choice. Try again.</prompt>
+        <reprompt/>
+      </nomatch>
+
+      <filled>
+        <script>
+          <![CDATA[
+      switch(announcementselection)
+      {
+      case "1":
+      subCategory = "party";
+      break;
+      case "2":
+      subCategory = "funeral";
+      break;
+      case "3":
+      subCategory = "wedding";
+      break;
+      case "4":
+      subCategory = "other";
+      break;
+      default:
+      subCategory = "other";
+      break;
+      }
+      ]]>
+        </script>
+
+        <prompt>You selected a choice for category <value expr="mainCategory"/>
+         and subCategory <value expr="subCategory"/>.</prompt>
+        <goto next="#record_name_message"/>
+      </filled>
+    </field>
+  </form>
+
+  <form id="leave_message_promotion">
+    <field name = "promotionselection">
+      <prompt>
+        You have selected. promotion.
+        Press 1 to leave a promotion on selling.
+        Press 2 to leave a promotion on buying.
+        Press 3 to leave a promotion on discounts.
+        Press 4 to leave a job posting.
+      </prompt>
+
+      <grammar mode="dtmf" version="1.0" root="top">
+        <rule id="top">
+          <one-of>
+            <item>1</item>
+            <item>2</item>
+            <item>3</item>
+            <item>4</item>
+          </one-of>
+        </rule>
+      </grammar>
+
+      <noinput>
+        <prompt> I did not hear anything. Try Again. </prompt>
+        <reprompt/>
+      </noinput>
+
+      <nomatch>
+        <prompt> I did not recognise that choice. Try again.</prompt>
+        <reprompt/>
+      </nomatch>
+
+      <filled>
+        <script>
+          <![CDATA[
+      switch(promotionselection)
+      {
+      case "1":
+      subCategory = "selling";
+      break;
+      case "2":
+      subCategory = "buying";
+      break;
+      case "3":
+      subCategory = "discount";
+      break;
+      case "4":
+      subCategory = "jobs";
+      break;
+      default:
+      subCategory = "selling";
+      break;
+      }
+      ]]>
+        </script>
+
+        <prompt>You selected a choice for category <value expr="mainCategory"/>
+         and subCategory <value expr="subCategory"/>.</prompt>
+        <goto next="#record_name_message"/>
+      </filled>
+    </field>
+  </form>
+
+  <form id="record_name_message">
+    <record name="R_1" beep="true" dtmfterm="true">
+      <prompt>
+        Please provide your name after the beep.
+      </prompt>
+      <prompt>
+        After you are finished, you may press any DTMF key to indicate that you are done recording.
+      </prompt>
+      <filled>
+
+        <goto next="#record_message"/>
+      </filled>
+    </record>
+  </form>
+
+  <form id="record_message">
+    <record name="R_1" beep="true" dtmfterm="true">
+      <prompt>
+        We will begin recording your message after the beep.
+      </prompt>
+      <prompt>
+        After you are finished, you may press any DTMF key to indicate that you are done recording.
+      </prompt>
+      <filled>
+        <prompt>
+          Your recording was
+          <value expr="R_1"/>
+        </prompt>
+        <goto next="#confirm_message"/>
+      </filled>
+    </record>
+  </form>
+
+  <form id="confirm_message">
+    <field name="confirm">
+      <prompt>
+        You recorded a message for category <value expr="mainCategory"/>
+        and subCategory <value expr="subCategory"/>.
+        Please confirm your message.
+        Press 1 to confirm your message.
+        Press 2 to cancel your message.
+      </prompt>
+      <grammar mode="dtmf" version="1.0" root="top">
+        <rule id="top">
+          <one-of>
+            <item>1</item>
+            <item>2</item>
+          </one-of>
+        </rule>
+      </grammar>
+
+      <noinput>
+        <prompt> I did not hear anything. Try Again. </prompt>
+        <reprompt/>
+      </noinput>
+
+      <nomatch>
+        <prompt> I did not recognise that choice. Try again.</prompt>
+        <reprompt/>
+      </nomatch>
+
+      <filled>
+        <if cond="confirm == '1'">
+          <prompt>You have confirmed the message.
+                  Ending Call.
+          </prompt>
+        <elseif cond="confirm == '2'"/>
+          <prompt>The message will be deleted.
+                  Ending call.
+          </prompt>
+        </if>
+      </filled>
+    </field>
+  </form>
+
+</vxml>
