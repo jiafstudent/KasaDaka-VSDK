@@ -5,3 +5,4 @@ from .user import *
 from .voiceservice import *
 from .language import *
 from .task1 import *
+from .task2 import *

@@ -1,0 +1,249 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<vxml version="2.1">
+
+  <form id="main">
+    <field name="mainselection">
+      <prompt>
+        Hello and welcome to the radio operator number of Forona Blon radio.
+        Please select your mode of usage.
+        Press 1 for editing mode.
+        Press 2 for broadcasting mode.
+      </prompt>
+
+      <grammar mode="dtmf" version="1.0" root="top">
+        <rule id="top">
+          <one-of>
+            <item>1</item>
+            <item>2</item>
+          </one-of>
+        </rule>
+      </grammar>
+
+      <noinput>
+        <prompt> I did not hear anything. Try again.</prompt>
+        <reprompt/>
+      </noinput>
+
+      <nomatch>
+        <prompt> I did not recognise that choice. Try again.</prompt>
+        <reprompt/>
+      </nomatch>
+
+      <filled>
+        <if cond="mainselection == '1'">
+          <goto next="#editing"/>
+          <elseif cond="mainselection == '2'"/>
+          <goto next="#fake_broadcast" />
+        </if>
+      </filled>
+    </field>
+  </form>
+
+  <form id="editing">
+    <field name="editingselection">
+      <script>
+        <![CDATA[
+  var numberOfMessages = "1";
+  var numberOfAlertMessages = "1";
+  var numberOfEntertainmentMessages = "0";
+  var numberOfAnnouncementMessages = "0";
+  var numberOfPromotionalMessages = "0";
+
+  ]]>
+      </script>
+
+      <prompt>
+        You have 1 messages.
+        Of which, you have 1 alert messages and
+        0 entertainment messages and
+        0 announcement messages and
+        0 promotional messages.
+
+        <!--  You have <value expr="numberOfMessages" /> messages.
+  Of which, you have <value expr="numberOfAlertMessages"/> alert messages and
+  <value expr="numberOfEntertainmentMessages"/> entertainment messages and
+  <value expr="numberOfAnnouncementMessages"/> announcement messages and
+  <value expr="numberOfPromotionalMessages"/> promotional messages. -->
+
+        Press 1 to listen to all messages.
+        Press 2 to listen to alert messages.
+      </prompt>
+
+      <grammar mode="dtmf" version="1.0" root="top">
+        <rule id="top">
+          <one-of>
+            <item>1</item>
+            <item>2</item>
+          </one-of>
+        </rule>
+      </grammar>
+
+      <noinput>
+        <prompt> I did not hear anything. Try again.</prompt>
+        <reprompt/>
+      </noinput>
+
+      <nomatch>
+        <prompt> I did not recognise that choice. Try again.</prompt>
+        <reprompt/>
+      </nomatch>
+
+      <filled>
+        <if cond="editingselection == '1'">
+          <goto next="#play_all_messages"/>
+          <elseif cond="editingselection == '2'"/>
+          <goto next="#play_alert_messages"/>
+        </if>
+      </filled>
+    </field>
+  </form>
+
+  <form id="play_alert_messages">
+    <field name="alert_selection">
+
+      <script>
+        <![CDATA[
+  var TotalnumberOfAlert_healthMessages = "1";
+  var TotalnumberOfAlert_natureMessages = "0";
+  var TotalnumberOfAlert_crimeMessages = "0";
+  var TotalnumberOfAlert_MilitaryMessages = "0";
+
+
+ ]]>
+
+      </script>
+      <prompt>
+        You have 1 alerts on health.
+        You have 0 alerts on nature.
+        You have 0 alerts on crime.
+        You have 0 alerts on military.
+
+        Press 1 to listen to health alerts.
+       <!-- Press 2 to listen to nature alerts.
+        Press 3 to listen to crime alerts.
+        Press 4 to listen to all military alerts. -->
+      </prompt>
+
+      <grammar mode="dtmf" version="1.0" root="top">
+        <rule id="top">
+          <one-of>
+            <item>1</item>
+            <!--<item>2</item>
+            <item>3</item>
+            <item>4</item> -->
+          </one-of>
+        </rule>
+      </grammar>
+
+      <noinput>
+        <prompt> I did not hear anything. Try again.</prompt>
+        <reprompt/>
+      </noinput>
+
+      <nomatch>
+        <prompt> I did not recognise that choice. Try again.</prompt>
+        <reprompt/>
+      </nomatch>
+
+      <filled>
+        You have selected option <value expr="alert_selection"/>.
+        <goto next="#play_all_messages"/>
+      </filled>
+    </field>
+  </form>
+
+  <form id="play_all_messages">
+    <field name="handlemessage_selection">
+      <prompt> This is a test message. </prompt>
+      <prompt>
+        Press 1 to mark the message for broadcasting and continue
+        to the next message.
+        Press 2 to delete the message and continue to the next message.
+        Press 3 to continue to the next message.
+      </prompt>
+
+      <grammar mode="dtmf" version="1.0" root="top">
+        <rule id="top">
+          <one-of>
+            <item>1</item>
+            <item>2</item>
+            <item>3</item>
+          </one-of>
+        </rule>
+      </grammar>
+
+      <noinput>
+        <prompt> I did not hear anything. Try again.</prompt>
+        <reprompt/>
+      </noinput>
+
+      <nomatch>
+        <prompt> I did not recognise that choice. Try again.</prompt>
+        <reprompt/>
+      </nomatch>
+
+      <filled>
+        <if cond="handlemessage_selection == '1'">
+          <prompt> The message has been marked for broadcast. Continuing. </prompt>
+          <elseif cond="handlemessage_selection == '2'"/>
+          <prompt> The message has been marked for deletion. continuing. </prompt>
+          <elseif cond="handlemessage_selection =='3'"/>
+          <prompt> Continuing. </prompt>
+        </if>
+
+        <goto next = "#end_of_messages"/>
+      </filled>
+
+    </field>
+  </form>
+
+  <form id="fake_broadcast">
+    <block>
+      <prompt>
+        This is a test message for broadcasting.
+      </prompt>
+      <goto next="#end_of_messages"/>
+    </block>
+  </form>
+
+  <form id="end_of_messages">
+    <field name="confirm">
+      <prompt>
+        No more messages left.
+        Press 1 to return to main menu.
+        Press 2 to exit the application.
+      </prompt>
+      <grammar mode="dtmf" version="1.0" root="top">
+        <rule id="top">
+          <one-of>
+            <item>1</item>
+            <item>2</item>
+          </one-of>
+        </rule>
+      </grammar>
+
+      <noinput>
+        <prompt> I did not hear anything. Try Again. </prompt>
+        <reprompt/>
+      </noinput>
+
+      <nomatch>
+        <prompt> I did not recognise that choice. Try again.</prompt>
+        <reprompt/>
+      </nomatch>
+
+      <filled>
+        <if cond="confirm == '1'">
+          <goto next="#main"/>
+          <elseif cond="confirm == '2'"/>
+          <prompt>
+            Ending call.
+          </prompt>
+          <exit/>>
+        </if>
+      </filled>
+    </field>
+  </form>
+
+
+</vxml>

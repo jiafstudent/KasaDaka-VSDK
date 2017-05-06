@@ -4,7 +4,9 @@ from . import views
 
 app_name= 'service-development'
 urlpatterns = [
-    url(r'^task$', views.task_one, name='task_one'),
+    url(r'^customer$', views.task_one, name='task_one'),
+    url(r'^operator', views.task_two, name='task_two'),
+    url(r'^messagetask$', views.task_one_submit, name='task_one_submit'),
     url(r'^$', views.index, name='index'),
     url(r'^choice/(?P<element_id>[0-9]+)/(?P<session_id>[0-9]+)$', views.choice, name='choice'),
     url(r'^message/(?P<element_id>[0-9]+)/(?P<session_id>[0-9]+)$', views.message_presentation, name='message-presentation'),
